@@ -12,6 +12,9 @@ venv/
 
 # macOS
 .DS_Store
+
+# Office lock files (left behind while a document is open)
+~$*
 ._*
 .Spotlight-V100
 .Trashes
