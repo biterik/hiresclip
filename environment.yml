@@ -1,0 +1,9 @@
+name: hiresclip
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.11
+  - pypdfium2
+  - pillow
+  - pyobjc-framework-cocoa
+  - poppler
