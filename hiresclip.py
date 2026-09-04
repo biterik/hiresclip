@@ -13,6 +13,7 @@ silently if it is not available).
 
 Configuration:
   --dpi N / HIRESCLIP_DPI / PDFCLIP_DPI   render resolution (default 600)
+  --white                                 render onto white instead of a transparent background
   --no-svg                                do not write the PDF/SVG side files
   --svg-dir DIR                           where to write them (default ~/Desktop/hiresclip)
   --check                                 verify the installation, touch nothing
@@ -55,14 +56,17 @@ class Rendered:
     height: int  # pixels
     pages: int   # number of pages in the source PDF
     dpi: int
+    alpha: bool = True  # True if the PNG has a transparent background
 
 
-def render_png(pdf_bytes: bytes, dpi: int = DEFAULT_DPI, page: int = 0) -> Rendered:
+def render_png(pdf_bytes: bytes, dpi: int = DEFAULT_DPI, page: int = 0,
+               alpha: bool = True) -> Rendered:
     """Rasterise one page of *pdf_bytes* at *dpi* and return it as PNG bytes.
 
-    Raises ValueError for empty input, for a document without pages, or for an
-    out-of-range page index. pypdfium2 raises its own error for data that is
-    not a PDF.
+    By default the page is rendered onto a transparent background (RGBA PNG);
+    with ``alpha=False`` it is rendered onto white. Raises ValueError for empty input, for a document without
+    pages, or for an out-of-range page index. pypdfium2 raises its own error
+    for data that is not a PDF.
     """
     if not pdf_bytes:
         raise ValueError("empty PDF data")
@@ -72,17 +76,27 @@ def render_png(pdf_bytes: bytes, dpi: int = DEFAULT_DPI, page: int = 0) -> Rende
     import pypdfium2 as pdfium  # imported here so --help works without it
 
     doc = pdfium.PdfDocument(pdf_bytes)
-    n_pages = len(doc)
-    if n_pages == 0:
-        raise ValueError("PDF has no pages")
-    if not 0 <= page < n_pages:
-        raise ValueError(f"page {page} out of range (document has {n_pages} pages)")
+    try:
+        n_pages = len(doc)
+        if n_pages == 0:
+            raise ValueError("PDF has no pages")
+        if not 0 <= page < n_pages:
+            raise ValueError(f"page {page} out of range (document has {n_pages} pages)")
 
-    img = doc[page].render(scale=dpi / 72).to_pil()
+        fill = (0, 0, 0, 0) if alpha else (255, 255, 255, 255)
+        pdf_page = doc[page]
+        try:
+            bitmap = pdf_page.render(scale=dpi / 72, fill_color=fill)
+            img = bitmap.to_pil()
+        finally:
+            pdf_page.close()
+    finally:
+        doc.close()
+
     buf = io.BytesIO()
     img.save(buf, format="PNG", dpi=(dpi, dpi))
     return Rendered(png=buf.getvalue(), width=img.width, height=img.height,
-                    pages=n_pages, dpi=dpi)
+                    pages=n_pages, dpi=dpi, alpha=alpha)
 
 
 # --------------------------------------------------------------------------- #
@@ -190,6 +204,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--dpi", type=int, default=_default_dpi(),
                    help="render resolution in dots per inch "
                         "(default: $HIRESCLIP_DPI, $PDFCLIP_DPI or %(default)s)")
+    p.add_argument("--white", action="store_true",
+                   help="render onto a white background instead of a transparent one")
     p.add_argument("--no-svg", action="store_true",
                    help="do not write the PDF/SVG side files")
     p.add_argument("--svg-dir", type=pathlib.Path, default=DEFAULT_SVG_DIR,
@@ -239,7 +255,7 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
         return 1
 
     try:
-        rendered = render_png(pdf_bytes, dpi=args.dpi)
+        rendered = render_png(pdf_bytes, dpi=args.dpi, alpha=not args.white)
     except Exception as exc:  # noqa: BLE001 - surface any render failure as a notification
         notify(f"Could not render the PDF: {exc}")
         return 1
@@ -253,7 +269,8 @@ def main(argv: Optional[Sequence[str]] = None) -> int:
 
     write_clipboard_png(rendered.png)
 
-    msg = f"Clipboard now holds a {rendered.dpi} dpi PNG ({rendered.width}x{rendered.height} px)"
+    kind = "PNG" if rendered.alpha else "white-background PNG"
+    msg = f"Clipboard now holds a {rendered.dpi} dpi {kind} ({rendered.width}x{rendered.height} px)"
     if rendered.pages > 1:
         msg += f" - page 1 of {rendered.pages} rendered"
     if svg_path is not None:

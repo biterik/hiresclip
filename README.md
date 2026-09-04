@@ -48,7 +48,10 @@ every figure (export, crop, insert) is what `hiresclip` replaces with a keystrok
 
 The script asks the general pasteboard for its `com.adobe.pdf` data, rasterises the first
 page with [pypdfium2](https://github.com/pypdfium2-team/pypdfium2) at the requested dpi
-and writes the PNG back as the only item on the clipboard. If `pdftocairo` from poppler
+onto a transparent background and writes the PNG back as the only item on the clipboard.
+Transparency is the default because most figures copied from papers have no background
+of their own, so the pasted picture sits directly on the slide, whatever its colour;
+`--white` gives an opaque white background instead. If `pdftocairo` from poppler
 is available it also saves the PDF snippet and an SVG conversion to
 `~/Desktop/hiresclip/` for people who prefer Insert → Picture from File. A macOS
 notification reports the pixel size of the PNG, or tells you that there was no PDF on the
@@ -118,6 +121,7 @@ before putting them into the shortcut:
 
 ```sh
 ~/miniforge3/envs/hiresclip/bin/python ~/bin/hiresclip.py --dpi 300
+~/miniforge3/envs/hiresclip/bin/python ~/bin/hiresclip.py --white
 ~/miniforge3/envs/hiresclip/bin/python ~/bin/hiresclip.py --no-svg
 ~/miniforge3/envs/hiresclip/bin/python ~/bin/hiresclip.py --svg-dir ~/figures
 ~/miniforge3/envs/hiresclip/bin/python ~/bin/hiresclip.py --check
@@ -126,6 +130,7 @@ before putting them into the shortcut:
 | Option | Meaning |
 |---|---|
 | `--dpi N` | Render resolution. Default 600, or the value of `HIRESCLIP_DPI` (`PDFCLIP_DPI` is also read). 300 is plenty for slides and keeps files small. |
+| `--white` | Render onto an opaque white background. The default is a transparent background (RGBA PNG), which PowerPoint preserves, so the figure sits directly on the slide. Use `--white` for figures whose PDF relies on the page being white, or for pasting into applications that ignore transparency. |
 | `--no-svg` | Do not write the PDF and SVG side files. |
 | `--svg-dir DIR` | Where to write them. Default `~/Desktop/hiresclip`. |
 | `--check` | Report interpreter, imports and the `pdftocairo` path. Does not touch the clipboard. |
@@ -167,9 +172,8 @@ Pictures and the image quality setting in PowerPoint's preferences).
 - macOS only. The clipboard access uses AppKit through PyObjC.
 - The clipboard gets a PNG, not an SVG, because PowerPoint for Mac does not accept SVG
   from the clipboard. The SVG side file can be inserted with Insert → Picture from File.
-- Figures with transparent backgrounds are rendered onto white. There is no alpha flag
-  yet; pypdfium2 can render with an alpha channel if you need it
-  (`render(..., fill_color=(0, 0, 0, 0))`).
+- The background is transparent by default. A figure that only looks right on white
+  (thin light-coloured lines, for instance) may need `--white` on a dark slide.
 - Only the first page of a multi-page selection is rendered.
 - Tested on macOS Tahoe with PowerPoint for Mac 365. The clipboard path is not covered by
   the unit tests, see "Development".

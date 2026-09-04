@@ -101,10 +101,24 @@ class RenderPngTests(unittest.TestCase):
         self.assertAlmostEqual(dpi[1], 300, delta=1)
 
     def test_content_is_rendered(self):
-        img = decode(hiresclip.render_png(ONE_PAGE, dpi=72).png).convert("RGB")
+        img = decode(hiresclip.render_png(ONE_PAGE, dpi=72).png)
         # PDF origin is bottom-left; the square is in the lower-left quadrant of the image
-        self.assertEqual(img.getpixel((25, 75)), (255, 0, 0))    # inside the square
-        self.assertEqual(img.getpixel((75, 25)), (255, 255, 255))  # white background
+        self.assertEqual(img.getpixel((25, 75)), (255, 0, 0, 255))  # inside the square
+        self.assertEqual(img.getpixel((75, 25))[3], 0)              # outside: transparent
+
+    def test_default_background_is_transparent(self):
+        r = hiresclip.render_png(ONE_PAGE, dpi=72)
+        self.assertTrue(r.alpha)
+        img = decode(r.png)
+        self.assertEqual(img.mode, "RGBA")
+        self.assertEqual(img.getpixel((75, 25))[3], 0)            # background transparent
+        self.assertEqual(img.getpixel((25, 75)), (255, 0, 0, 255))  # square still opaque red
+
+    def test_white_background_on_request(self):
+        r = hiresclip.render_png(ONE_PAGE, dpi=72, alpha=False)
+        self.assertFalse(r.alpha)
+        img = decode(r.png).convert("RGBA")
+        self.assertEqual(img.getpixel((75, 25)), (255, 255, 255, 255))
 
     def test_multipage_renders_first_page_and_reports_count(self):
         r = hiresclip.render_png(TWO_PAGES, dpi=72)
@@ -182,6 +196,10 @@ class CliTests(unittest.TestCase):
         ns = hiresclip.build_parser().parse_args(["--no-svg", "--svg-dir", "/tmp/x"])
         self.assertTrue(ns.no_svg)
         self.assertEqual(ns.svg_dir, pathlib.Path("/tmp/x"))
+
+    def test_white_flag(self):
+        self.assertFalse(hiresclip.build_parser().parse_args([]).white)
+        self.assertTrue(hiresclip.build_parser().parse_args(["--white"]).white)
 
     def test_applescript_escaping(self):
         self.assertEqual(hiresclip._applescript_string('a "b" \\ c'), 'a \\"b\\" \\\\ c')
