@@ -6,9 +6,17 @@ renders it at 600 dpi and puts the result back on the clipboard as a PNG. Office
 then pastes the PNG instead of the blurry screen-resolution TIFF it would otherwise use,
 and the slide still looks right when the deck is opened in PowerPoint on Windows.
 
-Workflow: **select in Preview → ⌘C → ⌃⌘V → ⌘V in PowerPoint**
+Workflow: **select in Preview → ⌘C → ⌥⌘V → ⌘V in PowerPoint**
 
-![before / after](docs/before-after.png)
+![The same figure pasted into a PowerPoint deck on the Mac in three ways and opened in PowerPoint for Windows: pasted as PDF (blurry), pasted as TIFF via Paste Special (blurry), pasted via hiresclip (sharp)](docs/before-after.png)
+
+*The same journal figure, pasted three times into one deck on a Mac and then opened in
+PowerPoint for Windows, shown at the zoom level of a projected slide. Top: plain ⌘V, which
+hands PowerPoint the PDF flavour; on Windows it is a 44 dpi picture. Middle: ⌃⌘V Paste
+Special as TIFF, also 44 dpi. Bottom: after pressing the hiresclip hotkey. The source is
+Fig. 1 of [doi:10.1038/s43246-025-00914-z](https://doi.org/10.1038/s43246-025-00914-z)
+(CC BY 4.0); the three full slides, as exported from PowerPoint for Windows, are in
+[docs/copy-paste-probs.pdf](docs/copy-paste-probs.pdf).*
 
 ## The problem
 
@@ -99,8 +107,12 @@ environment, so `conda activate` would not work there.
 5. Click the text that reads **Apps and N more** (the accepted input types) and untick
    every input type, so the Quick Action takes no input. Set
    **If there's no input** to **Continue**.
-6. Click **Add Keyboard Shortcut** and press ⌃⌘V. If that combination is already used
-   on your machine, ⌃⌥⌘V is a good alternative.
+6. Click **Add Keyboard Shortcut** and press ⌥⌘V. This combination is not used by
+   Preview, Acrobat or PowerPoint (macOS only binds it in Finder and in Apple's text
+   apps, where it means "Paste Style"). Do not use ⌃⌘V: that is Paste Special in
+   PowerPoint for Mac, the dialog that pastes the TIFF, and ⇧⌘V and ⌥⇧⌘V are
+   PowerPoint's paste-formatting shortcuts. If ⌥⌘V is taken on your machine, ⌃⌥⌘V is
+   free everywhere.
 7. Give the shortcut the name `hiresclip`.
 
 The first time the hotkey fires, macOS asks whether Shortcuts may run shell scripts and
@@ -113,7 +125,7 @@ paste into Preview with File → New from Clipboard. The window title shows the 
 
 ## Usage
 
-Select a region in Preview or Acrobat, press ⌘C, press the hotkey, wait for the
+Select a region in Preview or Acrobat, press ⌘C, press the hotkey (⌥⌘V), wait for the
 notification, then ⌘V in PowerPoint, Word or Excel.
 
 The script can also be run from a terminal, which is the easiest way to try options
