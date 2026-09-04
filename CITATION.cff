@@ -1,0 +1,31 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+title: "hiresclip: high-resolution clipboard figures from PDFs for Office on macOS"
+type: software
+version: 1.0.0
+date-released: 2026-09-04
+license: BSD-3-Clause
+repository-code: "https://github.com/biterik/hiresclip"
+abstract: >-
+  hiresclip replaces the PDF snippet copied from Preview or Acrobat on the
+  macOS clipboard with a high-dpi PNG so that PowerPoint, Word and Excel paste
+  a sharp, Windows-safe bitmap instead of the low-resolution TIFF.
+  Funded by the Deutsche Forschungsgemeinschaft (DFG, German Research
+  Foundation) under the National Research Data Infrastructure – NFDI 38/1 –
+  project number 460247524 (NFDI-MatWerk consortium).
+authors:
+  - family-names: Bitzek
+    given-names: Erik
+    email: e.bitzek@mpi-susmat.de
+    orcid: "https://orcid.org/0000-0001-7430-3694"
+    affiliation: >-
+      Department of Materials Science, WW8-Materials Simulation,
+      Friedrich-Alexander-Universität Erlangen-Nürnberg,
+      Dr.-Mack-Straße 77, 90762 Fürth, Germany
+keywords:
+  - macOS
+  - clipboard
+  - PDF
+  - PowerPoint
+  - figures
+  - PNG
