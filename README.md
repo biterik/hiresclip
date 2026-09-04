@@ -15,8 +15,9 @@ PowerPoint for Windows, shown at the zoom level of a projected slide. Top: plain
 hands PowerPoint the PDF flavour; on Windows it is a 44 dpi picture. Middle: ⌃⌘V Paste
 Special as TIFF, also 44 dpi. Bottom: after pressing the hiresclip hotkey. The source is
 Fig. 1 of [doi:10.1038/s43246-025-00914-z](https://doi.org/10.1038/s43246-025-00914-z)
-(CC BY 4.0); the three full slides, as exported from PowerPoint for Windows, are in
-[docs/copy-paste-probs.pdf](docs/copy-paste-probs.pdf).*
+(CC BY 4.0). The deck itself is [docs/copy-paste-probs.pptx](docs/copy-paste-probs.pptx),
+so you can inspect the three pasted pictures on your own machine; the slides as exported
+from PowerPoint for Windows are in [docs/copy-paste-probs.pdf](docs/copy-paste-probs.pdf).*
 
 ## The problem
 
