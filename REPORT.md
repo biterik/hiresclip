@@ -1,12 +1,12 @@
 # biterik/hiresclip — repo vitals
 
 ![stars](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fbiterik%2Fhiresclip%2Fvitals%2Fbadge%2Fstars.json) ![views/week](https://img.shields.io/endpoint?url=https%3A%2F%2Fraw.githubusercontent.com%2Fbiterik%2Fhiresclip%2Fvitals%2Fbadge%2Fviews-week.json) 
-_Updated 2026-11-22T11:28:13Z (UTC) · machine-readable: [VITALS.json](VITALS.json) · full history: [history.ndjson](history.ndjson) · daily snapshots: [snapshots/](snapshots/)_
+_Updated 2026-11-23T12:48:36Z (UTC) · machine-readable: [VITALS.json](VITALS.json) · full history: [history.ndjson](history.ndjson) · daily snapshots: [snapshots/](snapshots/)_
 
 | | |
 |---|---|
 | Repository created | 2026-09-04 |
-| Tracked by repo-vitals since | 2026-08-22 (93 days)³ |
+| Tracked by repo-vitals since | 2026-08-22 (94 days)³ |
 
 
 ## Summary
@@ -15,7 +15,7 @@ _Updated 2026-11-22T11:28:13Z (UTC) · machine-readable: [VITALS.json](VITALS.js
 |---|---:|---:|---:|
 | Views | 2 | 15 | 15 |
 | Unique visitors¹ | 2 | 5 | 5 |
-| Clones | 268 | 665 | 665 |
+| Clones | 266 | 666 | 666 |
 | Stars gained | 0 | 0 | 0 |
 | Release downloads gained | 0 | 0 | 0 |
 
@@ -23,14 +23,14 @@ _Updated 2026-11-22T11:28:13Z (UTC) · machine-readable: [VITALS.json](VITALS.js
 
 ## Since tracking began
 
-Everything recorded so far, from 2026-08-22 (93 days) — the total, and the same total expressed as an average rate.
+Everything recorded so far, from 2026-08-22 (94 days) — the total, and the same total expressed as an average rate.
 
 | Metric | Total | Average / 30 d |
 |---|---:|---:|
 | Views | 15 | 4.8 |
 | Unique visitors¹ | 5 | 1.6 |
-| Clones | 665 | 214.5 |
-| Unique cloners¹ | 435 | 140.3 |
+| Clones | 666 | 212.6 |
+| Unique cloners¹ | 436 | 139.1 |
 | Stars gained | 0 | 0.0 |
 | Release downloads gained | 0 | 0.0 |
 
@@ -39,14 +39,14 @@ Averages are the total divided by days tracked, times 30 — not a projection.
 ## Trends — last 30 days
 
 ```
-views  ▁▁▁▁▁█▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁·  (2 total)
-clones ▂▄▁▃▃▁▆▂▄▁▁▆█▆▁▄▅▂▃▄▂▂▅▄▄▄▁▅▇·  (268 total)
+views  ▁▁▁▁█▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁▁·  (2 total)
+clones ▄▁▃▃▁▆▂▄▁▁▆█▆▁▄▅▂▃▄▂▂▅▄▄▄▁▅▇▁·  (266 total)
 ```
 
 ('·' = day without data)
 
 Stars: **0** (+0 in 30 d, +0 in 7 d)
-**Conversion funnel (30 d):** 2 unique visitors → 169 unique cloners → 0 stars gained → 0 downloads gained
+**Conversion funnel (30 d):** 2 unique visitors → 167 unique cloners → 0 stars gained → 0 downloads gained
 
 
 ## Releases
@@ -79,7 +79,7 @@ Interactive dashboard: [index.html](index.html) on this branch (raw URLs don't
 render HTML — view it via GitHub Pages on the vitals branch, the repo-vitals
 hub, or locally: `git clone -b vitals … && python -m http.server`).
 A copy of this report named with the repo and today's date lives at
-[reports/biterik-hiresclip-2026-11-22.md](reports/biterik-hiresclip-2026-11-22.md)
+[reports/biterik-hiresclip-2026-11-23.md](reports/biterik-hiresclip-2026-11-23.md)
 — safe to download standalone.
 
 <sub>[repo-vitals](https://github.com/biterik/repo-vitals) by Erik Bitzek —
